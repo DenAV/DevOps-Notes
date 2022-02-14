@@ -43,11 +43,18 @@
     # sudo nano /etc/fail2ban/jail.local
 
     - And configure it to look like this
-    [ssh]
-    port = 2266
-    action = ufw[application="OpenSSH-2266", blocktype=reject]
-    logpath = %(sshd_log)s
-    backend = %(sshd_backend)s
+    [ssh-ufw]
+	enabled = true
+	port = 2266
+	filter = sshd
+	findtime = 1h
+	bantime = 30m
+
+	action = ufw[application="OpenSSH-3322", blocktype=reject]
+	logpath = %(sshd_log)s
+	backend = %(sshd_backend)s
+	maxretry = 5
+
 
     - Reload fail2ban so that it recognizes the new jail configuration
     # sudo fail2ban-client reload
@@ -63,3 +70,29 @@
     |- Currently banned: 1
     |- Total banned: 2
     `- Banned IP list: xxx.xxx.xxx.yyy
+	
+5. Fail2ban: Release blocked IP address again
+	# sudo fail2ban-client status
+
+	Status
+	|- Number of jail:      2
+	`- Jail list:   ssh-ufw, sshd
+	
+	# sudo fail2ban-client -i
+	
+	# fail2ban> status ssh-ufw
+	Status for the jail: ssh-ufw
+	|- Filter
+	|  |- Currently failed: 1
+	|  |- Total failed:     28
+	|  `- File list:        /var/log/auth.log
+	`- Actions
+	   |- Currently banned: 0
+	   |- Total banned:     2
+	   `- Banned IP list: 123.123.123.123
+
+	- unlock them with "set [Jail list] unbanip IP_ADRESSE"
+	# fail2ban> set ssh-ufw unbanip 123.123.123.123
+	
+
+
