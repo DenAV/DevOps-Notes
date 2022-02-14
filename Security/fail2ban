@@ -1,0 +1,65 @@
+1. On Ubuntu, fail2ban is included in the standard repo. Installing Fail2ban to your box is as easy as:
+    # sudo apt update && sudo apt install fail2ban
+
+2. First, let’s change the port used by sshd to listen to incoming connection
+    # sudo nano /etc/ssh/sshd_config
+
+    - Find this line
+    # Port 22
+
+    - Uncomment and change it to
+    Port 2266
+
+    - Replace “2266” with the port you want to use. Save and close the config file, and restart sshd
+    # systemctl restart sshd
+
+3. Next, create ufw app profile for the new port configuration.
+    # sudo nano /etc/ufw/applications.d/openssh-server
+
+    - ..and modify it accordingly, from
+    [OpenSSH]
+    title=Secure shell server, an rshd replacement
+    description=OpenSSH is a free implementation of the Secure Shell protocol.
+    ports=22/tcp
+
+    - To look like this
+    [OpenSSH]
+    title=Secure shell server, an rshd replacement
+    description=OpenSSH is a free implementation of the Secure Shell protocol.
+    ports=22/tcp
+
+    [OpenSSH-2266]
+    title=Secure shell server, an rshd replacement
+    description=OpenSSH is a free implementation of the Secure Shell protocol.
+    ports=2266/tcp
+
+    - Ufw should now report our custom sshd port profile on its’ app list
+    test@test:~$ sudo ufw app list
+    Available applications:
+    OpenSSH
+    OpenSSH-2266
+
+4. To customize the sshd jail, open the jail configuration file
+    # sudo nano /etc/fail2ban/jail.local
+
+    - And configure it to look like this
+    [ssh]
+    port = 2266
+    action = ufw[application="OpenSSH-2266", blocktype=reject]
+    logpath = %(sshd_log)s
+    backend = %(sshd_backend)s
+
+    - Reload fail2ban so that it recognizes the new jail configuration
+    # sudo fail2ban-client reload
+
+    - Now you can test the jail. Try logging in to the box with invalid credentials a couple of times, and check the jail status
+    test@test:~$ sudo fail2ban-client status sshd
+    Status for the jail: sshd
+    |- Filter
+    | |- Currently failed: 0
+    | |- Total failed: 10
+    | `- File list: /var/log/auth.log
+    `- Actions
+    |- Currently banned: 1
+    |- Total banned: 2
+    `- Banned IP list: xxx.xxx.xxx.yyy
