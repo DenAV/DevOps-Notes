@@ -1,0 +1,65 @@
+# von der Web-Seite https://serveradmin.ru/centos-nastroyka-servera/
+# sudo dnf update
+
+# sudo dnf install -y mc vim
+# cp /usr/share/mc/syntax/sh.syntax /usr/share/mc/syntax/unknown.syntax
+
+#####
+####  SELINUX
+#####
+# sudo vim /etc/sysconfig/selinux
+    SELINUX=disabled
+
+# sudo setenforce 0
+
+#####
+####  FIREWALL
+#####
+
+# sudo systemctl stop firewalld
+# sudo systemctl disable firewalld
+
+# sudo dnf install -y iptables-services
+# systemctl enable iptables
+
+# vim /etc/iptables.sh
+
+# chmod 0740 /etc/iptables.sh
+# /etc/iptables.sh
+
+# iptables -L -v -n
+
+#####
+####  REPOSITORY
+#####
+
+# dnf install -y epel-release
+# rpm -Uhv https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+#####
+####  HISTORY
+#####
+
+# vim .bashrc
+   HISTSIZE=10000
+   HISTTIMEFORMAT="%h %d %H:%M:%S "
+   PROMPT_COMMAND='history -a'
+   HISTIGNORE="ls:ll:history:w:htop"
+
+# source ~/.bashrc
+
+#####
+####  TOOLS
+#####
+
+# sudo dnf install -y wget bzip2 traceroute gdisk tree
+# sudo dnf install -y net-tools bind-utils iftop htop atop
+
+#####
+####  SSH KEY 
+#####
+
+mkdir ~/.ssh
+chmod 0700 ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 0644 ~/.ssh/authorized_keys

@@ -1,0 +1,59 @@
+# von der Web-Seite https://serveradmin.ru/debian-nastroyka-servera/
+
+#####
+####  UPDATE
+#####
+
+# apt update
+# apt list --upgradable
+# apt upgrade -y
+
+# apt full-upgrade
+# apt autoremove
+
+#####
+####  PROGRAMMS
+#####
+
+# apt install -y mc vim nano
+
+# cp /usr/share/mc/syntax/sh.syntax /usr/share/mc/syntax/unknown.syntax
+
+#####
+####  SSH connection
+#####
+
+# nano /etc/ssh/sshd_config
+	Port 22678
+
+# service sshd restart
+
+#####
+####  FIREWALL
+#####
+
+# apt install -y ufw
+# systectl enable ufw
+
+# ufw allow from 192.168.1.2 to any port 22678
+# ufw enable
+
+#####
+####  HISTORY
+#####
+
+# vim .bashrc
+    export HISTSIZE=10000
+    export HISTTIMEFORMAT="%h %d %H:%M:%S "
+    PROMPT_COMMAND='history -a'
+    export HISTIGNORE="ls:ll:history:w:htop"
+
+# source ~/.bashrc
+
+#####
+####  TOOLS
+#####
+
+# apt install -y wget bzip2 traceroute gdisk tree
+# apt install -y net-tools iftop htop inetutils-ping
+

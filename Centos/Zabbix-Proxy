@@ -1,0 +1,24 @@
+# rpm -Uvh https://repo.zabbix.com/zabbix/5.2/rhel/8/x86_64/zabbix-release-5.2-1.el8.noarch.rpm
+# dnf clean all
+
+# dnf install -y zabbix-agent zabbix-proxy-sqlite3 sqlite
+
+
+# gunzip /usr/share/doc/zabbix-proxy-sqlite3/schema.sql.gz
+
+# mkdir /var/lib/sqlite
+
+# sqlite3 /var/lib/sqlite/zabbix.db < /usr/share/doc/zabbix-proxy-sqlite3/schema.sql
+
+
+# chown -R zabbix. /var/lib/sqlite
+
+# vim /etc/zabbix/zabbix_proxy.conf
+    Server=94.130.196.120
+    Hostname=Z-proxy14
+    DBName=/var/lib/sqlite/zabbix.db
+
+# systemctl enable zabbix-proxy
+# systemctl start zabbix-proxy
+
+# cat /var/log/zabbix/zabbix_proxy.log
