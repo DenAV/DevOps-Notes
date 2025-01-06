@@ -19,6 +19,7 @@ This repository contains essential documentation and scripts for setting up and 
 
 ### DevOps
 - **[git-setup.md](./DevOps/git-setup.md):** Guide to installing and using Git on CentOS and Ubuntu.
+- **[openssl-setup.md](./DevOps/openssl-setup.md):** Guide to installing OpenSSL, configuring it, and exploring its capabilities.
 
 ## Purpose
 This repository serves as a comprehensive reference for system administrators to efficiently set up and maintain Linux systems. It includes best practices, essential tools, and troubleshooting steps.
