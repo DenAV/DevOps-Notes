@@ -6,6 +6,13 @@ PlantUML allows you to create activity diagrams using simple text syntax. This g
 
 ```plantuml
 @startuml
+!theme mars
+right header 
+<font color=red>Warning:</font>
+example header
+endheader
+title Basic Syntax
+left footer @ example footer
 start
 :This is an action;
 :Another action;
@@ -17,11 +24,13 @@ endif
 stop
 @enduml
 ```
+![Basic Syntax](../images/tools/uml_basic-syntax.png?raw=true "Basic Syntax")
 
 ## Adding Notes
 
 ```plantuml
 @startuml
+title Adding Notes
 start
 :Start action;
 note left
@@ -31,11 +40,13 @@ end note
 stop
 @enduml
 ```
+![Adding Notes](../images/tools/uml_adding-notes.png?raw=true "Adding Notes")
 
 ## Parallel Activities
 
 ```plantuml
 @startuml
+title Parallel Activities
 start
 fork
   :Action 1;
@@ -46,11 +57,13 @@ end fork
 stop
 @enduml
 ```
+![Parallel Activities](../images/tools/uml_parallel-activities.png?raw=true "Parallel Activities")
 
 ## Swimlanes
 
 ```plantuml
 @startuml
+title Swimlanes
 |User|
 start
 :User action;
@@ -59,11 +72,13 @@ start
 stop
 @enduml
 ```
+![Swimlanes](../images/tools/uml_swimlanes.png?raw=true "Swimlanes")
 
 ## Loops
 
 ```plantuml
 @startuml
+title Loops
 start
 repeat
   :Loop action;
@@ -71,22 +86,38 @@ repeat while (Condition?)
 stop
 @enduml
 ```
+![Loops](../images/tools/uml_loops.png?raw=true "Loops")
 
-## Sub-diagrams
+## While loop
 
 ```plantuml
 @startuml
-start
-:Main action;
-:Call sub-diagram;
+title While loop
+while (check filesize ?) is (not empty)
+  :read file;
+  backward:log;
+endwhile (empty)
+:close file;
 @enduml
+```
+![While loop](../images/tools/uml_while-loop.png?raw=true "While loop")
 
-@startuml SubDiagram
+## Conditional
+
+```plantuml
+@startuml
+title Conditional
 start
-:This is a sub-diagram;
+if (Graphviz installed?) then (yes)
+  :process all\ndiagrams;
+else (no)
+  :process only
+  __sequence__ and __activity__ diagrams;
+endif
 stop
 @enduml
 ```
+![Conditional](../images/tools/uml_conditional.png?raw=true "Conditional")
 
 ## Best Practices
 
