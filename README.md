@@ -25,6 +25,24 @@ This repository contains essential documentation and scripts for setting up and 
 ## Purpose
 This repository serves as a comprehensive reference for system administrators to efficiently set up and maintain Linux systems. It includes best practices, essential tools, and troubleshooting steps.
 
+## Requirements
+- Tested on Ubuntu 20.04/22.04 and CentOS 7/8
+- Tools: bash, sudo, git
+- Optional tools referenced in guides: Docker, Fail2ban, UFW, OpenSSL, PlantUML
+
+## Quick Start
+```bash
+git clone https://github.com/DenAV/DevOps-Notes.git
+cd DevOps-Notes
+```
+- Browse docs in `CentOS/`, `Ubuntu/`, `Security/`, `Tools/`.
+- Example (CentOS firewall): back up rules, then run the script carefully:
+```bash
+sudo iptables-save > iptables-backup-$(date +%F).rules
+sudo bash CentOS/iptables.sh
+```
+- Docker on Ubuntu: see `Ubuntu/docker-install.md`.
+
 ## Contributions
 Contributions are welcome! Feel free to submit pull requests with additional guides or improvements.
 
