@@ -28,7 +28,7 @@ cp /usr/share/mc/syntax/sh.syntax /usr/share/mc/syntax/unknown.syntax
 ```bash
 # Edit the SSH configuration to change the port
 nano /etc/ssh/sshd_config
-# Example change: Set "Port 22678" in the configuration file
+# Example change: Set "Port <your-custom-port>" in the configuration file
 
 # Restart the SSH service to apply changes
 service sshd restart
@@ -42,7 +42,7 @@ apt install -y ufw
 systemctl enable ufw
 
 # Allow SSH connections from a specific IP and port
-ufw allow from 192.168.1.2 to any port 22678
+ufw allow from 192.0.2.1 to any port <your-custom-port>
 
 # Enable the firewall
 ufw enable

@@ -24,9 +24,9 @@ sudo nano /etc/ssh/sshd_config
   ```
 - Uncomment and change it to:
   ```
-  Port 2266
+  Port <your-custom-port>
   ```
-- Replace `2266` with the port you want to use.
+- Replace `<your-custom-port>` with the port you want to use.
 - Save and close the configuration file.
 
 Restart the SSH service to apply the changes:
@@ -55,10 +55,10 @@ description=OpenSSH is a free implementation of the Secure Shell protocol.
 ports=22/tcp
 
 # Add a new profile for the custom SSH port
-[OpenSSH-2266]
+[OpenSSH-<your-custom-port>]
 title=Secure shell server, an rshd replacement
 description=OpenSSH is a free implementation of the Secure Shell protocol.
-ports=2266/tcp
+ports=<your-custom-port>/tcp
 ```
 
 Now UFW should list the custom SSH port profile:
@@ -83,13 +83,13 @@ Add the following configuration for the SSH jail:
 # Configure a jail for the custom SSH port
 [ssh-ufw]
 enabled = true
-port = 2266
+port = <your-custom-port>
 filter = sshd
 findtime = 1h
 bantime = 30m
 
 # Define the action for blocking IPs using UFW
-action = ufw[application="OpenSSH-2266", blocktype=reject]
+action = ufw[application="OpenSSH-<your-custom-port>", blocktype=reject]
 logpath = %(sshd_log)s
 backend = %(sshd_backend)s
 maxretry = 5
@@ -141,7 +141,7 @@ Interactively release a blocked IP address:
 sudo fail2ban-client -i
 
 # Unban a specific IP address for the ssh-ufw jail
-fail2ban> set ssh-ufw unbanip 123.123.123.123
+fail2ban> set ssh-ufw unbanip 192.0.2.100
 ```
 
 ### Reference
