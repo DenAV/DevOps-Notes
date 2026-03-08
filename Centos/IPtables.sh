@@ -7,8 +7,8 @@
 export IPT="iptables"
 
 # Interface connected to the internet
-export WAN=ens192
-export WAN_IP=192.168.0.11
+export WAN=<your-interface>
+export WAN_IP=192.0.2.10
 
 # Flush all iptables chains
 $IPT -F
@@ -53,19 +53,19 @@ $IPT -A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT
 $IPT -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 
 # Open ports for SSH, HTTP, and HTTPS
-$IPT -A INPUT -i $WAN -p tcp -s 192.168.17.0/24 --dport 22 -j ACCEPT
-$IPT -A INPUT -i $WAN -p tcp -s 192.168.0.0/20 --dport 80 -j ACCEPT
-$IPT -A INPUT -i $WAN -p tcp -s 192.168.17.0/24 --dport 80 -j ACCEPT
-$IPT -A INPUT -i $WAN -p tcp -s 192.168.0.0/20 --dport 443 -j ACCEPT
-$IPT -A INPUT -i $WAN -p tcp -s 192.168.17.0/24 --dport 443 -j ACCEPT
+$IPT -A INPUT -i $WAN -p tcp -s 192.0.2.0/24 --dport 22 -j ACCEPT
+$IPT -A INPUT -i $WAN -p tcp -s 198.51.100.0/24 --dport 80 -j ACCEPT
+$IPT -A INPUT -i $WAN -p tcp -s 192.0.2.0/24 --dport 80 -j ACCEPT
+$IPT -A INPUT -i $WAN -p tcp -s 198.51.100.0/24 --dport 443 -j ACCEPT
+$IPT -A INPUT -i $WAN -p tcp -s 192.0.2.0/24 --dport 443 -j ACCEPT
 
 # Open ports for Zabbix-Agent
-$IPT -A INPUT -i $WAN -p tcp -s 10.10.10.0/24 --dport 10051 -j ACCEPT
-$IPT -A INPUT -i $WAN -p tcp -s 10.10.11.0/24 --dport 10051 -j ACCEPT
-$IPT -A INPUT -i $WAN -p tcp -s 192.168.0.0/18 --dport 10051 -j ACCEPT
+$IPT -A INPUT -i $WAN -p tcp -s 10.0.0.0/24 --dport 10051 -j ACCEPT
+$IPT -A INPUT -i $WAN -p tcp -s 10.0.1.0/24 --dport 10051 -j ACCEPT
+$IPT -A INPUT -i $WAN -p tcp -s 203.0.113.0/24 --dport 10051 -j ACCEPT
 
 # Open ports for MySQL
-$IPT -A INPUT -i $WAN -p tcp -s 192.168.0.11 --dport 3306 -j ACCEPT
+$IPT -A INPUT -i $WAN -p tcp -s 192.0.2.10 --dport 3306 -j ACCEPT
 
 # Define logging chains
 $IPT -N undef_in
